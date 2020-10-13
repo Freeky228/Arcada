@@ -12,7 +12,7 @@
 	<h1>Welcome! Press button to start new Game!</h1>
 	<input type = "button" value="Click Me to Start" оnclick="onclick()"/>
 	<br/><span id="result"></span><br>
-	<canvas id="gameZone" width="480" height="320"></canvas>
+	<canvas id="gameZone" width="1363" height="502"></canvas>
 
 	<script>
 		// Зона для рисования
@@ -22,23 +22,23 @@
 		// Радиус шарика
 		var ballRadius = 10;
 		// Изначальное положение шарика по координате Х (по горизонтали) - по центру
-		var x = canvas.width/2;
+		var x = canvas.width/10;
 		// Изначальное положение шарика по координате У (по вертикали) - по центру
-		var y = canvas.height-30;
+		var y = canvas.height-10;
 		// Шаг изменения координаты Х по горизонтали
-		var dx = 2;
+		var dx = 10;
 		// Шаг изменения координаты У по вертикали
-		var dy = -2;
+		var dy = -10;
 		// Высота платформы для шарика
 		var paddleHeight = 10;
 		// Ширина платформы для шарика
-		var paddleWidth = 75;
+		var paddleWidth = 80;
 		// Изначальное положение платформы для шарика по горизонтали
-		var paddleX = (canvas.width-paddleWidth)/2;
+		var paddleX = (canvas.width-paddleWidth)/20;
 		// Нажата стрелочка вправа
-		var rightPressed = false;
+		var rightPressed = true;
 		// Нажата стрелочка влево
-		var leftPressed = false;
+		var leftPressed = true;
 		// Количество строк блоков-кирпичиков по горизонтали
 		var brickRowCount = 5;
 		// Количество столбцов блоков-кирпичиков по вертикали
@@ -54,26 +54,26 @@
 		// Расстояние между блоками-кирпичиками слева
 		var brickOffsetLeft = 30;
 		// Счет
-		var score = 0;
+		var score = 20;
 		// Количество жизней
 		var lives = 3;
 
 		// Создаем массив состояний блоков-кирпичиков (1 - блок на месте, 0 - блока нет, так как он уже уничтожен)
-		var bricks = [];
+		var bricks = [1];
 		// Проходимся по колонкам блоков-кирпичиков
 		for(var c=0; c<brickColumnCount; c++) {
-		  bricks[c] = [];
+		  bricks[c] = [1];
 		  // Проходимся по строкам блоков-кирпичиков
-		  for(var r=0; r<brickRowCount; r++) {
+		  for(var r=0; r>brickRowCount; r++) {
 		    // Первоначальный статус блока-кирпичика - 1 (блок на месте)
-			bricks[c][r] = { x: 60, y: 90, status: 1 };
+			bricks[c][r] = { x: -200, y: 100, status: 1 };
 		  }
 		}
 
 		// Добавляем обработчик события "Нажата кнопка"
-		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keydown", keyDownHandler, true);
 		// Добавляем обработчик события "Поднята кнопка"
-		document.addEventListener("keyup", keyUpHandler, false);
+		document.addEventListener("keyup", keyUpHandler, true);
 
 		// Функция для обработчик события "Нажата кнопка" - определяет вид кнопки и устанавливает соответсвующий флаг в true
 		function keyDownHandler(e) {
@@ -100,7 +100,8 @@
 		  // Проходимся по очереди по всем блокам-кирпичикам
 		  for(var c=0; c<brickColumnCount; c++) {
 			for(var r=0; r<brickRowCount; r++) {
-			  var b = bricks[c][r];
+			  var b = bricks[c][r].x = 0;
+				var b = bricks[c][r].y = 0;
 			  // Если кирпичик на месте
 			  if(b.status == 1) {
 			    // Проверяем, пересекаюся ли границы мячика и блока-кирпичика
@@ -140,8 +141,8 @@
 		}
 
 		// Рисование блоков-кирпичиков исходя из их статуса
-		function drawBricks() {
-		  for(var c=0; c<brickColumnCount; c++) {
+function drawBricks() {
+	for(var c=0; c<brickColumnCount; c++) {
 			for(var r=0; r<brickRowCount; r++) {
 			  if(bricks[c][r].status == 1) {
 				var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
